@@ -9,7 +9,7 @@ public class Nbody extends JPanel implements ActionListener {
     int frame = 0;
     int frameEnd;
     int fps;
-    double gravConstant = 10;
+    double gravConstant = 100;
     Body[] bodies;
     Timer timer = new Timer(33, this);
 
@@ -66,8 +66,8 @@ public class Nbody extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Body[] inputBodies = new Body[2];
-                inputBodies[0] = new Body(100.0, 100.0, 100.0, "planet1", 0.0, 0.0);
-                inputBodies[1] = new Body(200.0, 200.0, 1.0, "meteor1", 0.0, 0.0);
+                inputBodies[0] = new Body(400.0, 400.0, 50.0, "planet1", 0.0, 0.0);
+                inputBodies[1] = new Body(100.0, 100.0, 1.0, "meteor1", 0.0, 0.0);
 //                inputBodies[2] = new Body(300.0, 300.0, 50.0, "planet1", 0.0, 0.0);
                 createWindow(2000, 1000, inputBodies);
             }
