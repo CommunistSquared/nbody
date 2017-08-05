@@ -26,6 +26,11 @@ public class BVector {
     public double getForceX() {
         return Math.cos(dir) * force;
     }
+    
+    public void setDirForce(double inputDir, double inputForce){
+        setDir(inputDir);
+        setForce(inputForce);
+    }
 
     public void setForceX(double inputForceX) {
         if (getForceY() == 0 && inputForceX >= 0) {
@@ -92,6 +97,9 @@ public class BVector {
 
     public void addBVector(BVector inputBVector) {
         addForceXY(inputBVector.getForceX(), inputBVector.getForceY());
+    }
+    public void setBVector(BVector inputBVector){
+        setDirForce(inputBVector.getDir(), inputBVector.getForce());
     }
 
     public BVector(double inputDir, double inputForce) {

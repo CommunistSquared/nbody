@@ -1,23 +1,22 @@
 package nbody;
 
 public class Body {
-    private double x;
-    private double y;
+    private BPoint point;
     private double mass;
     private String name;
     private BVector vector;
     
     public double getX(){
-        return x;
+        return point.getX();
     }
     public void setX(double inputX){
-        x = inputX;
+        point.setX(inputX);
     }
     public double getY(){
-        return y;
+        return point.getY();
     }
     public void setY(double inputY){
-        y = inputY;
+        point.setY(inputY);
     }
     public double getMass(){
         return mass;
@@ -30,6 +29,15 @@ public class Body {
     }
     public void setName(String inputName){
         name = inputName;
+    }
+    public BPoint getBPoint(){
+        return point;
+    }
+    public void setBPoint(BPoint inputBPoint){
+        point = inputBPoint;
+    }
+    public void addBPoint(BPoint inputBPoint){
+        point.addBPoint(inputBPoint);
     }
     public BVector getBVector(){
         return vector;
@@ -61,8 +69,8 @@ public class Body {
         return Math.atan2(getDistanceYTo(inputBody), getDistanceXTo(inputBody));
     }
     public Body(double inputX, double inputY, double inputMass, String inputName, double inputDir, double inputSpeed){
-        setX(inputX);
-        setY(inputY);
+        BPoint inputBPoint = new BPoint(inputX, inputY);
+        setBPoint(inputBPoint);
         setMass(inputMass);
         setName(inputName);
         BVector inputBVector = new BVector(inputDir, inputSpeed);
