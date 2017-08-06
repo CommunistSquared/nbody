@@ -30,6 +30,7 @@ public class Nbody extends JPanel implements ActionListener {
         window.setSize(2000, 1000);
     }
 
+    //this is called every frame, i calculate the separate vectors from a body to the rest of the bodies and then combine them into a single vector which i then add to the body. 
     @Override
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == timer) {
@@ -52,6 +53,7 @@ public class Nbody extends JPanel implements ActionListener {
         }
     }
 
+    //this draws the frame after im done calculating the positions and vectors, it draws an oval for each body as well as the name 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -63,14 +65,15 @@ public class Nbody extends JPanel implements ActionListener {
         }
     }
 
+    //this is called first when i run this program, this is also where i create the actual bodies to simulate
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Body[] inputBodies = new Body[2];
+                Body[] inputBodies = new Body[3];
                 //(x, y, mass, name, dir, force)
-                inputBodies[0] = new Body(400.0, 400.0, 50.0, "planet1", 0.0, 0.0);
-                inputBodies[1] = new Body(400.0, 300.0, 5.0, "meteor1", 0.0, 2.7);
-//                inputBodies[2] = new Body(300.0, 300.0, 50.0, "meteor2", 0.0, 0.0);
+                inputBodies[0] = new Body(500.0, 500.0, 100.0, "planet1", 0.0, 0.0);
+                inputBodies[1] = new Body(500.0, 200.0, 10.0, "moon1", 0.0, 2.0);
+                inputBodies[2] = new Body(500.0, 150.0, 1.0, "meteor1", 0.0, 0.5);
                 createWindow(2000, 1000, inputBodies);
             }
         });
