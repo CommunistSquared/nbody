@@ -9,7 +9,7 @@ public class Nbody extends JPanel implements ActionListener {
     int frame = 0;
     int frameEnd;
     int fps;
-    double gravConstant = 100;
+    double gravConstant = -10;
     Body[] bodies;
     Timer timer = new Timer(33, this);
 
@@ -19,6 +19,7 @@ public class Nbody extends JPanel implements ActionListener {
         timer.start();
     }
 
+    //create jpanel window
     public static void createWindow(int x, int y, Body[] inputBodies) {
         JFrame window = new JFrame("Nbody");
         Nbody game = new Nbody(2500, inputBodies);
@@ -66,9 +67,10 @@ public class Nbody extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Body[] inputBodies = new Body[2];
+                //(x, y, mass, name, dir, force)
                 inputBodies[0] = new Body(400.0, 400.0, 50.0, "planet1", 0.0, 0.0);
-                inputBodies[1] = new Body(100.0, 100.0, 1.0, "meteor1", 0.0, 0.0);
-//                inputBodies[2] = new Body(300.0, 300.0, 50.0, "planet1", 0.0, 0.0);
+                inputBodies[1] = new Body(400.0, 300.0, 5.0, "meteor1", 0.0, 2.7);
+//                inputBodies[2] = new Body(300.0, 300.0, 50.0, "meteor2", 0.0, 0.0);
                 createWindow(2000, 1000, inputBodies);
             }
         });

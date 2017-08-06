@@ -1,6 +1,9 @@
 package nbody;
 
 public class Body {
+    
+    //Body represents a physical object in the sim, it has a mass and a name, and its movement is represented by BVector and its location by BPoint
+    
     private BPoint point;
     private double mass;
     private String name;

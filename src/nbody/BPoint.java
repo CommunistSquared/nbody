@@ -2,6 +2,8 @@ package nbody;
 
 public class BPoint {
     
+    //BPoint contains 2 values, x and y, represents the coordinate position of Body
+    
     private double x;
     private double y;
     
