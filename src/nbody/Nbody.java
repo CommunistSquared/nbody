@@ -7,13 +7,11 @@ import java.awt.event.*;
 public class Nbody extends JPanel implements ActionListener {
 
     int frame = 0;
-    int frameEnd;
     BSim sim;
     Timer timer = new Timer(33, this);
 
     //creates BSim when called
-    public Nbody(int inputFrameEnd, Body[] inputBodies) {
-        frameEnd = inputFrameEnd;
+    public Nbody(Body[] inputBodies) {
         sim = new BSim(inputBodies, -10.0);
         timer.start();
     }
@@ -21,7 +19,7 @@ public class Nbody extends JPanel implements ActionListener {
     //create jpanel window and initialize NBody
     public static void createWindow(int x, int y, Body[] inputBodies) {
         JFrame window = new JFrame("Nbody");
-        Nbody game = new Nbody(2500, inputBodies);
+        Nbody game = new Nbody(inputBodies);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().add(game);
         window.pack();
