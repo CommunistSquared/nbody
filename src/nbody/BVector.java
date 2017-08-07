@@ -3,7 +3,6 @@ package nbody;
 public class BVector {
 
     //BVector contains 2 values, direction and force/speed, and represents which way and how fast Body moves
-    
     private double dir;
     private double force;
 
@@ -28,8 +27,8 @@ public class BVector {
     public double getForceX() {
         return Math.cos(dir) * force;
     }
-    
-    public void setDirForce(double inputDir, double inputForce){
+
+    public void setDirForce(double inputDir, double inputForce) {
         setDir(inputDir);
         setForce(inputForce);
     }
@@ -100,7 +99,8 @@ public class BVector {
     public void addBVector(BVector inputBVector) {
         addForceXY(inputBVector.getForceX(), inputBVector.getForceY());
     }
-    public void setBVector(BVector inputBVector){
+
+    public void setBVector(BVector inputBVector) {
         setDirForce(inputBVector.getDir(), inputBVector.getForce());
     }
 
