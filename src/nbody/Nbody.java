@@ -43,11 +43,22 @@ public class Nbody extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int a = 0; a < sim.getBodies().length; a++) {
-            g.drawOval((int) sim.getBodies()[a].getX()-(int) sim.getBodies()[a].getMass()/2, (int) sim.getBodies()[a].getY()-(int) sim.getBodies()[a].getMass()/2, (int) sim.getBodies()[a].getMass(), (int) sim.getBodies()[a].getMass());
-            g.drawString(sim.getBodies()[a].getName(), (int) sim.getBodies()[a].getX(), (int) sim.getBodies()[a].getY() - 5);
-            for (int b = 0; b < sim.getBodies()[a].getTrail().length; b++) {
-                if(sim.getBodies()[a].getTrail()[b] != null){
-                g.drawLine((int) sim.getBodies()[a].getTrail()[b].getX(), (int) sim.getBodies()[a].getTrail()[b].getY(), (int) sim.getBodies()[a].getTrail()[b].getX(), (int) sim.getBodies()[a].getTrail()[b].getY());
+            Body body = sim.getBodies()[a];
+            String name = body.getName();
+            int mass = (int) body.getMass();
+            int diameter = (int) body.getMass() / 2;
+            int x = (int) body.getX();
+            int y = (int) body.getY();
+            int trailLength = (int) body.getTrail().length;
+            g.drawOval(x - diameter, y - diameter, mass, mass);
+            g.drawString(name, x, y - diameter - 5);
+            for (int b = 0; b < trailLength - 1; b++) {
+                if (body.getTrail()[b] != null) {
+                    int trailX = (int) body.getTrail()[b].getX();
+                    int trailY = (int) body.getTrail()[b].getY();
+                    int trailNextX = (int) body.getTrail()[b + 1].getX();
+                    int trailNextY = (int) body.getTrail()[b + 1].getY();
+                    g.drawLine(trailX, trailY, trailNextX, trailNextY);
                 }
             }
         }
@@ -59,10 +70,10 @@ public class Nbody extends JPanel implements ActionListener {
             public void run() {
                 Body[] inputBodies = new Body[3];
                 //x, y, mass, name, dir, force, trail length
-                inputBodies[0] = new Body(500.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500);
-                inputBodies[1] = new Body(500.0, 200.0, 10.0, "moon1", 0.0, 2.4, 500);
-                inputBodies[2] = new Body(500.0, 150.0, 1.0, "meteor1", 0.0, 0.9, 500);
-                createSim(2000, 1000, inputBodies, -10.0);
+                inputBodies[0] = new Body(450.0, 450.0, 10.0, "sun", 0.0, 0.0, 100);
+                inputBodies[1] = new Body(450.0, 50.0, 0.001, "planet", 0.0, 1.1, 10000);
+                inputBodies[2] = new Body(450.0, 45.0, 0.00001, "moon", 0.0, 1.21, 100);
+                createSim(1000, 1000, inputBodies, -50.0);
             }
         });
     }
