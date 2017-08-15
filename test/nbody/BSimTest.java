@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BVectorTest {
+public class BSimTest {
     
     /**
      * Test of addBVector method, of class BVector.

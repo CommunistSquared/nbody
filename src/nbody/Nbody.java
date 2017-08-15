@@ -59,9 +59,9 @@ public class Nbody extends JPanel implements ActionListener {
             public void run() {
                 Body[] inputBodies = new Body[3];
                 //x, y, mass, name, dir, force, trail length
-                inputBodies[0] = new Body(500.0, 500.0, 100.0, "planet1", 0.0, 0.2, 1000);
-                inputBodies[1] = new Body(500.0, 200.0, 10.0, "moon1", 0.0, 2.4, 1000);
-                inputBodies[2] = new Body(500.0, 150.0, 1.0, "meteor1", 0.0, 0.9, 1000);
+                inputBodies[0] = new Body(500.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500);
+                inputBodies[1] = new Body(500.0, 200.0, 10.0, "moon1", 0.0, 2.4, 500);
+                inputBodies[2] = new Body(500.0, 150.0, 1.0, "meteor1", 0.0, 0.9, 500);
                 createSim(2000, 1000, inputBodies, -10.0);
             }
         });
