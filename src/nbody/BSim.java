@@ -1,5 +1,7 @@
 package nbody;
 
+import java.util.Arrays;
+
 public class BSim {
 
     //gravity here
@@ -29,13 +31,21 @@ public class BSim {
                 if (b != a) {
                     BVector gravBVector = new BVector(bodies[a].getDirTo(bodies[b]), gravConstant * bodies[b].getMass() / Math.pow(bodies[a].getDistanceTo(bodies[b]), 2));
                     gravTotalBVector.addBVector(gravBVector);
-                    System.out.println(bodies[b].getName() + " influencing " + bodies[a].getName() + " by ForceX: " + gravBVector.getForceX() + " by ForceY: " + gravBVector.getForceY());
                 }
             }
             bodies[a].addBVector(gravTotalBVector);
             bodies[a].addXY(bodies[a].getBVector().getForceX(), bodies[a].getBVector().getForceY());
-            System.out.println(bodies[a].getName() + "'s vector - ForceX: " + bodies[a].getBVector().getForceX() + " ForceY: " + bodies[a].getBVector().getForceY());
+            bodies[a].setTrail(calculateTrail(bodies[a]));
         }
+    }
+
+    public BPoint[] calculateTrail(Body inputBody) {
+        BPoint[] newTrail = new BPoint[inputBody.getTrail().length];
+        for (int a = 1; a < inputBody.getTrail().length; a++) {
+            newTrail[a - 1] = inputBody.getTrail()[a];
+        }
+        newTrail[(inputBody.getTrail().length) - 1] = inputBody.getBPoint();
+        return newTrail;
     }
 
     public BSim(Body[] inputBodies, double inputGravConstant) {

@@ -8,23 +8,23 @@ public class Nbody extends JPanel implements ActionListener {
 
     int frame = 0;
     BSim sim;
-    Timer timer = new Timer(33, this);
+    Timer timer = new Timer(16, this);
 
     //creates BSim when called
-    public Nbody(Body[] inputBodies) {
-        sim = new BSim(inputBodies, -10.0);
+    public Nbody(Body[] inputBodies, double inputGravConstant) {
+        sim = new BSim(inputBodies, inputGravConstant);
         timer.start();
     }
 
     //create jpanel window and initialize NBody
-    public static void createWindow(int x, int y, Body[] inputBodies) {
+    public static void createSim(int inputX, int inputY, Body[] inputBodies, double inputGravConstant) {
         JFrame window = new JFrame("Nbody");
-        Nbody game = new Nbody(inputBodies);
+        Nbody game = new Nbody(inputBodies, inputGravConstant);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().add(game);
         window.pack();
         window.setVisible(true);
-        window.setSize(2000, 1000);
+        window.setSize(inputX, inputY);
+        window.getContentPane().add(game);
     }
 
     //this is called every frame
@@ -42,10 +42,14 @@ public class Nbody extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
         for (int a = 0; a < sim.getBodies().length; a++) {
-            g2.drawOval((int) sim.getBodies()[a].getX(), (int) sim.getBodies()[a].getY(), (int) sim.getBodies()[a].getMass(), (int) sim.getBodies()[a].getMass());
-            g2.drawString(sim.getBodies()[a].getName(), (int) sim.getBodies()[a].getX(), (int) sim.getBodies()[a].getY() - 5);
+            g.drawOval((int) sim.getBodies()[a].getX()-(int) sim.getBodies()[a].getMass()/2, (int) sim.getBodies()[a].getY()-(int) sim.getBodies()[a].getMass()/2, (int) sim.getBodies()[a].getMass(), (int) sim.getBodies()[a].getMass());
+            g.drawString(sim.getBodies()[a].getName(), (int) sim.getBodies()[a].getX(), (int) sim.getBodies()[a].getY() - 5);
+            for (int b = 0; b < sim.getBodies()[a].getTrail().length; b++) {
+                if(sim.getBodies()[a].getTrail()[b] != null){
+                g.drawLine((int) sim.getBodies()[a].getTrail()[b].getX(), (int) sim.getBodies()[a].getTrail()[b].getY(), (int) sim.getBodies()[a].getTrail()[b].getX(), (int) sim.getBodies()[a].getTrail()[b].getY());
+                }
+            }
         }
     }
 
@@ -54,11 +58,11 @@ public class Nbody extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Body[] inputBodies = new Body[3];
-                //(x, y, mass, name, dir, force)
-                inputBodies[0] = new Body(500.0, 500.0, 100.0, "planet1", 0.0, 0.0);
-                inputBodies[1] = new Body(500.0, 200.0, 10.0, "moon1", 0.0, 2.2);
-                inputBodies[2] = new Body(500.0, 150.0, 1.0, "meteor1", 0.0, 0.7);
-                createWindow(2000, 1000, inputBodies);
+                //x, y, mass, name, dir, force, trail length
+                inputBodies[0] = new Body(500.0, 500.0, 100.0, "planet1", 0.0, 0.2, 1000);
+                inputBodies[1] = new Body(500.0, 200.0, 10.0, "moon1", 0.0, 2.4, 1000);
+                inputBodies[2] = new Body(500.0, 150.0, 1.0, "meteor1", 0.0, 0.9, 1000);
+                createSim(2000, 1000, inputBodies, -10.0);
             }
         });
     }

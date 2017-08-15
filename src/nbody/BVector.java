@@ -3,8 +3,7 @@ package nbody;
 public class BVector {
 
     //BVector contains 2 values, direction and force/speed, and represents which way and how fast Body moves
-    private double dir;
-    private double force;
+    private double dir, force;
 
     public double getDir() {
         return dir;
@@ -34,22 +33,10 @@ public class BVector {
     }
 
     public void setForceX(double inputForceX) {
-        if (getForceY() == 0 && inputForceX >= 0) {
-            dir = 0;
-            force = inputForceX;
-        } else if (getForceY() == 0 && inputForceX < 0) {
-            dir = Math.PI;
-            force = inputForceX * -1;
-        } else {
-            double newDir = (Math.atan2(getForceY(), inputForceX));
-            double newForce = (Math.sqrt(Math.pow(inputForceX, 2) + Math.pow(getForceY(), 2)));
-//        System.out.println("New VectorXY: " + inputForceX + " " + getForceY());
-//            if (newDir < 0 || (inputForceX < 0 && getForceY() < 0)) {
-//                newDir = Math.PI + newDir;
-//            }
-            dir = newDir;
-            force = newForce;
-        }
+        double newDir = (Math.atan2(getForceY(), inputForceX));
+        double newForce = (Math.sqrt(Math.pow(inputForceX, 2) + Math.pow(getForceY(), 2)));
+        dir = newDir;
+        force = newForce;
     }
 
     public void addForceX(double inputForceX) {
@@ -61,25 +48,12 @@ public class BVector {
     }
 
     public void setForceY(double inputForceY) {
-        if (getForceX() == 0 && inputForceY >= 0) {
-            dir = Math.PI / 2;
-            force = inputForceY;
-        } else if (getForceX() == 0 && inputForceY < 0) {
-            dir = 3 * (Math.PI / 2);
-            force = inputForceY * -1;
-        } else {
-            double newDir = (Math.atan2(inputForceY, getForceX()));
-            double newForce = (Math.sqrt(Math.pow(getForceX(), 2) + Math.pow(inputForceY, 2)));
-//        System.out.println("New VectorXY: " + getForceX() + " " + inputForceY);
-//            if (newDir < 0) {
-//                newDir = (Math.PI * 2) + newDir;
-//            }
-//            if (getForceX() < 0 && inputForceY < 0) {
-//                newDir = Math.PI + newDir;
-//            }
-            dir = newDir;
-            force = newForce;
-        }
+
+        double newDir = (Math.atan2(inputForceY, getForceX()));
+        double newForce = (Math.sqrt(Math.pow(getForceX(), 2) + Math.pow(inputForceY, 2)));
+        dir = newDir;
+        force = newForce;
+
     }
 
     public void addForceY(double inputForceY) {
@@ -108,9 +82,6 @@ public class BVector {
         dir = inputDir;
         force = inputForce;
     }
-//    public BVector(double inputForceX, double inputForceY) {
-//        setForceXY(inputForceX, inputForceY);
-//    }
 
     public BVector(BVector inputBVector1, BVector inputBVector2) {
         setForceX(inputBVector1.getForceX() + inputBVector2.getForceX());

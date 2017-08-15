@@ -2,27 +2,28 @@ package nbody;
 
 public class Body {
 
-    //Body represents a physical object in the sim, it has a mass and a name, and its movement is represented by BVector and its location by BPoint
+    //Body represents a physical object in the sim, it has a mass and a name, and its movement is represented by BVector and its location by BPoint. added array of BPoints to represent trail
     private BPoint point;
     private double mass;
     private String name;
     private BVector vector;
+    private BPoint[] trail;
 
     public double getX() {
         return point.getX();
     }
 
-    public void setX(double inputX) {
-        point.setX(inputX);
-    }
+//    public void setX(double inputX) {
+//        point.setX(inputX);
+//    }
 
     public double getY() {
         return point.getY();
     }
 
-    public void setY(double inputY) {
-        point.setY(inputY);
-    }
+//    public void setY(double inputY) {
+//        point.setY(inputY);
+//    }
 
     public double getMass() {
         return mass;
@@ -43,7 +44,7 @@ public class Body {
     public BPoint getBPoint() {
         return point;
     }
-
+    
     public void setBPoint(BPoint inputBPoint) {
         point = inputBPoint;
     }
@@ -64,13 +65,13 @@ public class Body {
         vector.addBVector(inputBVector);
     }
 
-    public void setXY(double inputX, double inputY) {
-        setX(inputX);
-        setY(inputY);
-    }
+//    public void setXY(double inputX, double inputY) {
+//        setX(inputX);
+//        setY(inputY);
+//    }
 
     public void addXY(double inputX, double inputY) {
-        setXY(getX() + inputX, getY() + inputY);
+        point = point.addXY(inputX, inputY);
     }
 
     public double getDistanceXTo(Body inputBody) {
@@ -89,12 +90,21 @@ public class Body {
         return Math.atan2(getDistanceYTo(inputBody), getDistanceXTo(inputBody));
     }
 
-    public Body(double inputX, double inputY, double inputMass, String inputName, double inputDir, double inputSpeed) {
+    public BPoint[] getTrail() {
+        return trail;
+    }
+    
+    public void setTrail(BPoint[] inputTrail){
+        trail = inputTrail;
+    }
+
+    public Body(double inputX, double inputY, double inputMass, String inputName, double inputDir, double inputSpeed, int inputTrailLength) {
         BPoint inputBPoint = new BPoint(inputX, inputY);
         setBPoint(inputBPoint);
         setMass(inputMass);
         setName(inputName);
         BVector inputBVector = new BVector(inputDir, inputSpeed);
         setBVector(inputBVector);
+        trail = new BPoint[inputTrailLength];
     }
 }
