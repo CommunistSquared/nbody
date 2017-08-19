@@ -98,6 +98,15 @@ public class Body {
         trail = inputTrail;
     }
 
+    //
+    public boolean checkCollision(Body inputBody) {
+        if ((this.getDistanceTo(inputBody) - (this.getMass()/2)) < inputBody.getMass()) {
+            System.out.println("kaboom");
+            return true;
+        }
+        return false;
+    }
+
     public Body(double inputX, double inputY, double inputMass, String inputName, double inputDir, double inputSpeed, int inputTrailLength) {
         BPoint inputBPoint = new BPoint(inputX, inputY);
         setBPoint(inputBPoint);
