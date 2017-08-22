@@ -1,5 +1,7 @@
 package nbody;
 
+import java.awt.event.MouseEvent;
+
 public class BPoint {
 
     //BPoint contains 2 values, x and y, represents the coordinate position of Body and trails
@@ -28,5 +30,13 @@ public class BPoint {
 
     public String toString() {
         return "BPoint (x=" + x + ", y=" + y + ")";
+    }
+    
+    public Boolean mouseTouching(MouseEvent e, int bounds){
+        if((Math.abs(e.getX() - getX()) < bounds) && (Math.abs(e.getY() - getY()) < bounds)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
