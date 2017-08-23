@@ -31,6 +31,7 @@ public class BSim {
                 if (b != a) {
                     BVector gravBVector = new BVector(bodies[a].getDirTo(bodies[b]), gravConstant * bodies[b].getMass() / Math.pow(bodies[a].getDistanceTo(bodies[b]), 2));
                     gravTotalBVector.addBVector(gravBVector);
+                    bodies[a].checkCollision(bodies[b]);
                 }
             }
             bodies[a].addBVector(gravTotalBVector);
