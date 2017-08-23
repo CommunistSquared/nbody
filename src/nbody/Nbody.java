@@ -3,6 +3,7 @@ package nbody;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Dimension;
 
 public class Nbody extends JPanel implements ActionListener {
 
@@ -10,9 +11,17 @@ public class Nbody extends JPanel implements ActionListener {
     BSim sim;
     Timer timer = new Timer(16, this);
     BPoint camera = new BPoint(0, 0);
+                   Body[] inputBodies = new Body[3];
+                //x, y, mass, name, dir, force, trail length
+//                inputBodies[0] = new Body(200.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500);
+//                inputBodies[1] = new Body(200.0, 200.0, 10.0, "moon1", 0.0, 2.3, 500);
+//                inputBodies[2] = new Body(200.0, 150.0, 1.0, "meteor1", 0.0, 0.8, 500);
 
     //creates BSim when called
     public Nbody(Body[] inputBodies, double inputGravConstant) {
+                        inputBodies[0] = new Body(200.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500);
+                inputBodies[1] = new Body(200.0, 200.0, 10.0, "moon1", 0.0, 2.3, 500);
+                inputBodies[2] = new Body(200.0, 150.0, 1.0, "meteor1", 0.0, 0.8, 500);
         sim = new BSim(inputBodies, inputGravConstant);
         timer.start();
     }
@@ -44,7 +53,7 @@ public class Nbody extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int a = 0; a < sim.getBodies().length; a++) {
-            camera = sim.getBodies()[0].getBPoint();
+            camera = sim.getBodies()[2].getBPoint();
             Body body = sim.getBodies()[a];
             String name = body.getName();
             int mass = (int) body.getMass();
@@ -73,11 +82,11 @@ public class Nbody extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Body[] inputBodies = new Body[3];
-                //x, y, mass, name, dir, force, trail length
-                inputBodies[0] = new Body(200.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500);
-                inputBodies[1] = new Body(200.0, 200.0, 10.0, "moon1", 0.0, 2.3, 500);
-                inputBodies[2] = new Body(200.0, 150.0, 1.0, "meteor1", 0.0, 0.8, 500);
+//                Body[] inputBodies = new Body[3];
+//                //x, y, mass, name, dir, force, trail length
+//                inputBodies[0] = new Body(200.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500);
+//                inputBodies[1] = new Body(200.0, 200.0, 10.0, "moon1", 0.0, 2.3, 500);
+//                inputBodies[2] = new Body(200.0, 150.0, 1.0, "meteor1", 0.0, 0.8, 500);
                 createSim(1000, 1000, inputBodies, -10.0);
             }
         });
