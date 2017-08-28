@@ -14,10 +14,10 @@ public class Nbody extends JPanel implements ActionListener {
     Timer timer = new Timer(16, this);
     BPoint camera = new BPoint(0, 0);
     //x, y, mass, name, dir, speed, trail length   
-    static Body[] inputBodies = new Body[]{
-        new Body(200.0, 500.0, 100.0, "planet1", 0.0, 0.2, 500),
-        new Body(200.0, 200.0, 10.0, "moon1", 0.0, 2.3, 500),
-        new Body(200.0, 150.0, 1.0, "meteor1", 0.0, 0.8, 500)
+    static Body[] bodies = new Body[]{
+        new Body(200.0, 500.0, 100.0, "sun1", 0.0, 0.2, 200),
+        new Body(200.0, 200.0, 10.0, "planet1", 0.0, 2.3, 200),
+        new Body(200.0, 150.0, 1.0, "moon1", 0.0, 0.75, 200)
     };
     static Dimension size = new Dimension(1000, 1000);
 
@@ -59,21 +59,43 @@ public class Nbody extends JPanel implements ActionListener {
             String name = body.getName();
             int mass = (int) body.getMass();
             int diameter = (int) Math.sqrt(body.getMass());
-            int camX = (int) camera.getX() - (int)(size.getWidth() / 2);
-            int camY = (int) camera.getY() - (int)(size.getHeight() / 2);
+            int camX = (int) camera.getX() - (int) (size.getWidth() / 2);
+            int camY = (int) camera.getY() - (int) (size.getHeight() / 2);
             int x = (int) body.getX() - camX;
             int y = (int) body.getY() - camY;
             int trailLength = (int) body.getTrail().length;
             g.drawOval(x - diameter / 2, y - diameter / 2, diameter, diameter);
             g.drawString(name, x, y - diameter - 5);
-            for (int b = 0; b < trailLength - 1; b++) {
-                if (body.getTrail()[b] != null) {
-                    int trailX = (int) body.getTrail()[b].getX() - camX;
-                    int trailY = (int) body.getTrail()[b].getY() - camY;
-                    int trailNextX = (int) body.getTrail()[b + 1].getX() - camX;
-                    int trailNextY = (int) body.getTrail()[b + 1].getY() - camY;
-                    g.drawLine(trailX, trailY, trailNextX, trailNextY);
-                }
+            if (a == 2) {
+                drawTrailsRelative(g, body, bodies, camX, camY);
+            } else {
+                drawTrailsAbsolute(g, body, camX, camY);
+            }
+        }
+    }
+
+    public void drawTrailsAbsolute(Graphics g, Body inputBody, int inputCamX, int inputCamY) {
+        int trailLength = (int) inputBody.getTrail().length;
+        for (int a = 0; a < trailLength - 1; a++) {
+            if (inputBody.getTrail()[a] != null) {
+                int trailX = (int) inputBody.getTrail()[a].getX() - inputCamX;
+                int trailY = (int) inputBody.getTrail()[a].getY() - inputCamY;
+                int trailNextX = (int) inputBody.getTrail()[a + 1].getX() - inputCamX;
+                int trailNextY = (int) inputBody.getTrail()[a + 1].getY() - inputCamY;
+                g.drawLine(trailX, trailY, trailNextX, trailNextY);
+            }
+        }
+    }
+
+    public void drawTrailsRelative(Graphics g, Body inputBody, Body[] inputBodies, int inputCamX, int inputCamY) {
+        int trailLength = (int) inputBody.getTrail().length;
+        for (int a = 0; a < trailLength - 1; a++) {
+            if (inputBody.getTrail()[a] != null) {
+                int trailX = (int) inputBody.getTrail()[a].getX() - (int) inputBody.getClosestBody(inputBodies).getTrail()[a].getDistanceXTo(inputBody.getClosestBody(inputBodies).getBPoint()) - inputCamX;
+                int trailY = (int) inputBody.getTrail()[a].getY() - (int) inputBody.getClosestBody(inputBodies).getTrail()[a].getDistanceYTo(inputBody.getClosestBody(inputBodies).getBPoint()) - inputCamY;
+                int trailNextX = (int) inputBody.getTrail()[a + 1].getX() - (int) inputBody.getClosestBody(inputBodies).getTrail()[a + 1].getDistanceXTo(inputBody.getClosestBody(inputBodies).getBPoint()) - inputCamX;
+                int trailNextY = (int) inputBody.getTrail()[a + 1].getY() - (int) inputBody.getClosestBody(inputBodies).getTrail()[a + 1].getDistanceYTo(inputBody.getClosestBody(inputBodies).getBPoint()) - inputCamY;
+                g.drawLine(trailX, trailY, trailNextX, trailNextY);
             }
         }
     }
@@ -83,7 +105,7 @@ public class Nbody extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                createSim((int)size.getWidth(), (int)size.getHeight(), inputBodies, -10.0);
+                createSim((int) size.getWidth(), (int) size.getHeight(), bodies, -10.0);
             }
         });
     }
