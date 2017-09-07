@@ -6,33 +6,33 @@ public class BSim {
 
     //gravity here
     Body[] bodies;
-    double gravConstant;
+    double grav;
 
     public Body[] getBodies() {
         return bodies;
     }
 
-    public void setBodies(Body[] inputBodies) {
-        bodies = inputBodies;
+    public void setBodies(Body[] bodies) {
+        this.bodies = bodies;
     }
 
-    public double getGravConstant() {
-        return gravConstant;
+    public double getGrav() {
+        return grav;
     }
 
-    public void setGravConstant(double inputGravConstant) {
-        gravConstant = inputGravConstant;
+    public void setGrav(double grav) {
+        this.grav = grav;
     }
 
     public void nextTick() {
         for (int i = 0; i < bodies.length; i++) {
-            bodies[i].update(bodies, gravConstant);
+            bodies[i].update(bodies, grav);
         }
     }
 
-    public BSim(Body[] inputBodies, double inputGravConstant) {
-        setBodies(inputBodies);
-        setGravConstant(inputGravConstant);
+    public BSim(Body[] bodies, double grav) {
+        setBodies(bodies);
+        setGrav(grav);
     }
 
 }
