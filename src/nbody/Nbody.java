@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Nbody extends JPanel implements ActionListener {
+public class Nbody extends JPanel implements ActionListener, MouseListener {
 
     // Index of the body that camera is centered on
+    boolean running;
     int cameraIndex = 0;
-    double scale = 1.0;
+    double scale = 0.75;
     int frame = 0;
     BSim sim;
     Timer timer = new Timer(16, this);
@@ -24,18 +25,20 @@ public class Nbody extends JPanel implements ActionListener {
     //creates BSim when called
     public Nbody(Body[] inputBodies, double inputGravConstant) {
         sim = new BSim(inputBodies, inputGravConstant);
+        JFrame window = new JFrame("Nbody");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.pack();
+        window.setVisible(true);
+        window.setSize((int) size.getWidth(), (int) size.getHeight());
+        window.getContentPane().add(this);
+        window.addMouseListener(this);
+        addMouseListener(this);
         timer.start();
     }
 
     //create jpanel window and initialize NBody
-    public static void createSim(int inputX, int inputY, Body[] inputBodies, double inputGravConstant) {
-        JFrame window = new JFrame("Nbody");
-        Nbody game = new Nbody(inputBodies, inputGravConstant);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.pack();
-        window.setVisible(true);
-        window.setSize(inputX, inputY);
-        window.getContentPane().add(game);
+    public static void createSim(Body[] bodies, double grav) {
+        Nbody game = new Nbody(bodies, grav);
     }
 
     //this is called every frame
@@ -69,7 +72,7 @@ public class Nbody extends JPanel implements ActionListener {
 //            if (a == 2) {
 //                drawTrailsRelative(g, body, bodies, camX, camY);
 //            } else {
-                drawTrailsAbsolute(g, body, camX, camY);
+            drawTrailsAbsolute(g, body, camX, camY);
 //            }
         }
     }
@@ -105,8 +108,37 @@ public class Nbody extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                createSim((int) size.getWidth(), (int) size.getHeight(), bodies, -10.0);
+                createSim(bodies, -10.0);
             }
         });
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (timer.isRunning()) {
+            timer.stop();
+        } else {
+            timer.start();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
     }
 }

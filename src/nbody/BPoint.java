@@ -20,28 +20,24 @@ public class BPoint {
         return y;
     }
 
-    public BPoint addBPoint(BPoint inputBPoint) {
-        return new BPoint(inputBPoint.getX() + getX(), inputBPoint.getY() + getY());
+    public BPoint addBPoint(BPoint point) {
+        return new BPoint(point.getX() + getX(), point.getY() + getY());
     }
 
-    public BPoint addXY(double inputX, double inputY) {
-        return new BPoint(getX() + inputX, getY() + inputY);
+    public BPoint addXY(double x, double y) {
+        return new BPoint(getX() + x, getY() + y);
     }
 
-    public String toString() {
-        return "BPoint (x=" + x + ", y=" + y + ")";
+    public double getDistanceXTo(BPoint point) {
+        return getX() - point.getX();
     }
 
-    public double getDistanceXTo(BPoint inputBPoint) {
-        return getX() - inputBPoint.getX();
+    public double getDistanceYTo(BPoint point) {
+        return getY() - point.getY();
     }
 
-    public double getDistanceYTo(BPoint inputBPoint) {
-        return getY() - inputBPoint.getY();
-    }
-
-    public double getDistanceTo(BPoint inputBPoint) {
-        return Math.sqrt(Math.pow(getDistanceXTo(inputBPoint), 2) + Math.pow(getDistanceYTo(inputBPoint), 2));
+    public double getDistanceTo(BPoint point) {
+        return Math.sqrt(Math.pow(getDistanceXTo(point), 2) + Math.pow(getDistanceYTo(point), 2));
     }
 
     public Boolean mouseTouching(MouseEvent e, int bounds) {
