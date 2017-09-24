@@ -82,4 +82,8 @@ public class BVector {
     public void setBVector(BVector vector) {
         setDirForce(vector.getDir(), vector.getForce());
     }
+    
+    public void multiplyForce(double force){
+        this.force *= force;
+    }
 }

@@ -117,22 +117,30 @@ public class Body {
         this.trail = trail;
     }
 
-    public void update(Body[] bodies, double grav) {
+    int counter = 0;
+
+    public void update(Body[] bodies, double grav, double accuracy) {
         BVector gravTotalBVector = new BVector(0.0, 0.0);
+        double scale = 1 / accuracy;
         for (int i = 0; i < bodies.length; i++) {
             Body other = bodies[i];
             if (other != this) {
-                BVector gravBVector = new BVector(getDirTo(other), grav * other.getMass() / Math.pow(getDistanceTo(other), 2));
+                BVector gravBVector = new BVector(getDirTo(other), (grav * other.getMass() / Math.pow(getDistanceTo(other), 2)) * scale);
                 gravTotalBVector.addBVector(gravBVector);
             }
         }
         addBVector(gravTotalBVector);
-        addXY(getBVector().getForceX(), getBVector().getForceY());
-        setTrail(calculateTrail());
+        addXY((getBVector().getForceX() * scale), (getBVector().getForceY() * scale));
+        if (counter == accuracy) {
+            setTrail(calculateTrail());
+            counter = 0;
+        } else {
+            counter++;
+        }
     }
 
     public Body getClosestBody(Body[] bodies) {
-        Body closest = new Body(0.0, 0.0, 0.0, "", 0.0, 0.0, 0);
+        Body closest = new Body(Double.MAX_VALUE, Double.MAX_VALUE, 0.0, "", 0.0, 0.0, 0);
         for (int i = 0; i < bodies.length; i++) {
             Body other = bodies[i];
             if (other != this) {
